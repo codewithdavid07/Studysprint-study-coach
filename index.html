@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101827">
+<title>StudySprint — Personal Study Coach</title>
+<style>
+:root{--bg:#0b1220;--panel:#121d30;--panel2:#17243a;--text:#f4f7fb;--muted:#a8b6ca;--accent:#54e0c0;--blue:#83b7ff;--line:#2a3a52;--danger:#ffb1a8}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top right,#17334a 0,#0b1220 38rem);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+.wrap{max-width:980px;margin:auto;padding:22px 16px 50px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:22px}.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem}.logo{display:grid;place-items:center;background:var(--accent);color:#08221e;width:42px;height:42px;border-radius:14px;font-size:1.4rem}
+.pill{border:1px solid #31506a;border-radius:999px;padding:5px 10px;color:var(--accent);font-size:.78rem;white-space:nowrap}
+.hero{padding:24px 0 18px}.eyebrow{color:var(--accent);font-size:.8rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}h1{font-size:clamp(2rem,7vw,3.6rem);line-height:1.04;letter-spacing:-.04em;margin:10px 0 14px}h1 span{color:var(--accent)}.intro{color:var(--muted);max-width:650px;margin:0 0 20px}
+.grid{display:grid;grid-template-columns:1fr;gap:16px}.card{background:rgba(18,29,48,.94);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 12px 35px #0002}.card h2{font-size:1.12rem;margin:0 0 14px}.field{display:flex;flex-direction:column;gap:6px;margin:12px 0}.field label{font-size:.9rem;color:#dce6f3;font-weight:650}input,select,textarea{font:inherit;width:100%;padding:12px 13px;border-radius:11px;border:1px solid #40536d;background:#0c1627;color:var(--text);outline:none}input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px #54e0c01e}textarea{min-height:84px;resize:vertical}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{border:0;border-radius:12px;padding:12px 15px;font-weight:800;font:inherit;cursor:pointer}.primary{background:var(--accent);color:#08221e}.secondary{background:#21324a;color:var(--text);border:1px solid #3a4e68}.btn:active{transform:scale(.99)}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.hint{color:var(--muted);font-size:.83rem}.results{display:none}.results.show{display:block}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:12px 0 18px}.stat{background:#0c1627;border:1px solid var(--line);border-radius:13px;padding:12px}.stat strong{display:block;font-size:1.35rem;color:var(--accent)}.stat span{font-size:.78rem;color:var(--muted)}.task{display:flex;gap:11px;align-items:flex-start;background:#0c1627;border:1px solid var(--line);border-radius:13px;padding:12px;margin:9px 0}.task input{width:20px;height:20px;margin-top:3px;accent-color:var(--accent);flex-shrink:0}.task.done .task-title{text-decoration:line-through;color:var(--muted)}.task-title{font-weight:750}.task small{display:block;color:var(--muted);margin-top:3px}.tag{font-size:.72rem;color:var(--blue);border:1px solid #345276;border-radius:999px;padding:2px 7px;display:inline-block;margin-top:6px}.empty{color:var(--muted);padding:16px;border:1px dashed #40536d;border-radius:12px}.footer{color:var(--muted);font-size:.8rem;margin-top:22px}.notice{background:#102b2a;border:1px solid #286c62;color:#d9fff7;padding:12px;border-radius:12px;font-size:.88rem;margin-top:12px}
+@media(min-width:760px){.grid{grid-template-columns:.9fr 1.1fr}.hero{padding-top:36px}.card{padding:22px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><div class="logo">✓</div><span>StudySprint</span></div>
+    <div class="pill">STUDENT STUDY COACH</div>
+  </header>
+  <section class="hero">
+    <div class="eyebrow">Plan smarter · Learn steadily</div>
+    <h1>Your next study session,<br><span>figured out.</span></h1>
+    <p class="intro">Tell StudySprint what you need to study and how much time you have. It builds a practical plan, keeps your progress on this device, and helps you choose the next task.</p>
+  </section>
+
+  <div class="grid">
+    <section class="card">
+      <h2>✦ Build my study plan</h2>
+      <form id="planForm">
+        <div class="field">
+          <label for="name">What should we call you? (optional)</label>
+          <input id="name" maxlength="35" placeholder="e.g. Student">
+        </div>
+        <div class="field">
+          <label for="subjects">Subjects or topics *</label>
+          <textarea id="subjects" required placeholder="e.g. Python basics, Maths: matrices, Physics: waves"></textarea>
+          <div class="hint">Separate topics with commas or new lines.</div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="minutes">Study time today</label>
+            <select id="minutes">
+              <option value="30">30 minutes</option><option value="45">45 minutes</option>
+              <option value="60" selected>1 hour</option><option value="90">90 minutes</option>
+              <option value="120">2 hours</option><option value="180">3 hours</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="priority">Main goal</label>
+            <select id="priority">
+              <option value="exam">Prepare for an exam</option>
+              <option value="understand">Understand difficult topics</option>
+              <option value="revision">Revise what I know</option>
+              <option value="assignment">Finish an assignment</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="deadline">Next deadline (optional)</label>
+          <input id="deadline" type="date">
+        </div>
+        <button class="btn primary" type="submit">Create my plan →</button>
+        <p class="hint">This demo uses a transparent planning routine; it does not send your information to a server.</p>
+      </form>
+    </section>
+
+    <section class="card results" id="results" aria-live="polite">
+      <h2 id="greeting">Your study sprint</h2>
+      <p class="hint" id="summary">A plan based on your available time.</p>
+      <div class="stats">
+        <div class="stat"><strong id="totalMins">60</strong><span>planned minutes</span></div>
+        <div class="stat"><strong id="taskCount">3</strong><span>study steps</span></div>
+        <div class="stat"><strong id="doneCount">0</strong><span>completed</span></div>
+      </div>
+      <div id="taskList"></div>
+      <div class="notice" id="coachTip">Coach tip: Start with one small step. Progress beats perfection.</div>
+      <div class="actions">
+        <button class="btn secondary" id="nextBtn" type="button">What next?</button>
+        <button class="btn secondary" id="resetBtn" type="button">Reset progress</button>
+      </div>
+    </section>
+  </div>
+  <section class="card" style="margin-top:16px">
+    <h2>How StudySprint works</h2>
+    <div class="row">
+      <div><strong>1. Prioritise</strong><p class="hint">It considers your goal, topic list, and optional deadline.</p></div>
+      <div><strong>2. Break it down</strong><p class="hint">It allocates time to focus, practice, and review.</p></div>
+      <div><strong>3. Keep state</strong><p class="hint">Your plan and checked tasks are saved in this browser on this device.</p></div>
+      <div><strong>4. Guide the next step</strong><p class="hint">The coach recommends the next incomplete task or a short break.</p></div>
+    </div>
+  </section>
+  <div class="footer">Hackathon prototype · Alexa+ simulated-experience concept · No affiliation with or endorsement by Amazon. This demo is a local prototype, not a medical or academic guarantee.</div>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+const STORAGE_KEY = "studysprint-plan-v1";
+let plan = null;
+
+function cleanTopics(raw) {
+  return raw.split(/[,\n;]+/).map(s => s.trim()).filter(Boolean).slice(0, 12);
+}
+function makePlan(data) {
+  const topics = cleanTopics(data.subjects);
+  const total = Number(data.minutes);
+  const deadline = data.deadline ? new Date(data.deadline + "T23:59:00") : null;
+  const daysLeft = deadline ? Math.ceil((deadline - new Date()) / 86400000) : null;
+  let priorityLine = {
+    exam: "Prioritise recall and practice questions.",
+    understand: "Use short focus blocks and explain each idea in your own words.",
+    revision: "Focus on active recall rather than rereading.",
+    assignment: "Start with the deliverable, then complete and check one piece at a time."
+  }[data.priority];
+  let topicA = topics[0] || "your hardest topic";
+  let topicB = topics[1] || "a practice exercise";
+  let topicC = topics[2] || "key points from today's learning";
+  let focus = Math.max(10, Math.round(total * .5 / 5) * 5);
+  let practice = Math.max(5, Math.round(total * .3 / 5) * 5);
+  let review = Math.max(5, total - focus - practice);
+  // Keep the displayed time allocation equal to the selected total.
+  if (focus + practice + review !== total) review = total - focus - practice;
+  let tasks = [
+    {id:"focus", title:"Focus block: " + topicA, detail:"Study the core idea, then write 3 points from memory.", mins:focus, kind:"Learn"},
+    {id:"practice", title:"Practice: " + topicB, detail:data.priority === "assignment" ? "Make a small, visible piece of progress on the assignment." : "Solve 2–5 questions or create a tiny example.", mins:practice, kind:"Apply"},
+    {id:"review", title:"Recall and plan: " + topicC, detail:"Close your notes, summarise what you remember, and write one question for next time.", mins:review, kind:"Review"}
+  ];
+  if (data.priority === "exam") tasks[1].title = "Exam practice: " + topicB;
+  if (data.priority === "understand") tasks[1].title = "Explain it simply: " + topicB;
+  if (data.priority === "revision") tasks[0].title = "Active recall: " + topicA;
+  if (data.priority === "assignment") tasks[0].title = "Define the deliverable: " + topicA;
+  return { ...data, topics, total, tasks, done:[], daysLeft, priorityLine, createdAt:new Date().toISOString() };
+}
+function save() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(plan)); } catch(e) {}
+}
+function load() {
+  try { const raw = localStorage.getItem(STORAGE_KEY); if(raw) plan = JSON.parse(raw); } catch(e) { plan = null; }
+  if(plan) render();
+}
+function render() {
+  if(!plan) return;
+  $("results").classList.add("show");
+  $("greeting").textContent = plan.name ? plan.name + "'s study sprint" : "Your study sprint";
+  let deadlineText = plan.daysLeft === null ? "" : plan.daysLeft < 0 ? " Your deadline date has passed." : plan.daysLeft === 0 ? " Your deadline is today." : " Days until deadline: " + plan.daysLeft + ".";
+  $("summary").textContent = plan.priorityLine + deadlineText;
+  $("totalMins").textContent = plan.total;
+  $("taskCount").textContent = plan.tasks.length;
+  $("doneCount").textContent = plan.done.length;
+  $("taskList").innerHTML = "";
+  plan.tasks.forEach(task => {
+    const checked = plan.done.includes(task.id);
+    const row = document.createElement("label");
+    row.className = "task" + (checked ? " done" : "");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox"; checkbox.checked = checked; checkbox.setAttribute("aria-label", "Mark " + task.title + " complete");
+    checkbox.addEventListener("change", () => {
+      if(checkbox.checked && !plan.done.includes(task.id)) plan.done.push(task.id);
+      else plan.done = plan.done.filter(id => id !== task.id);
+      save(); render();
+    });
+    const text = document.createElement("div");
+    const title = document.createElement("div"); title.className = "task-title"; title.textContent = task.title;
+    const detail = document.createElement("small"); detail.textContent = task.detail + " (" + task.mins + " min)";
+    const tag = document.createElement("span"); tag.className = "tag"; tag.textContent = task.kind;
+    text.append(title, detail, tag); row.append(checkbox, text); $("taskList").append(row);
+  });
+  const remaining = plan.tasks.filter(t => !plan.done.includes(t.id));
+  if(remaining.length === 0) $("coachTip").textContent = "Sprint complete! Take a proper break, then add your next goal when you're ready.";
+  else if(plan.done.length) $("coachTip").textContent = "Nice progress. Next: " + remaining[0].title + ". Keep the next step small and focused.";
+  else $("coachTip").textContent = "Coach tip: " + plan.priorityLine + " Start with " + plan.tasks[0].title + ".";
+}
+$("planForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const data = {name:$("name").value.trim(), subjects:$("subjects").value, minutes:$("minutes").value, priority:$("priority").value, deadline:$("deadline").value};
+  if(cleanTopics(data.subjects).length === 0) { alert("Please enter at least one subject or topic."); return; }
+  plan = makePlan(data); save(); render();
+  $("results").scrollIntoView({behavior:"smooth", block:"start"});
+});
+$("nextBtn").addEventListener("click", () => {
+  if(!plan) return;
+  const remaining = plan.tasks.filter(t => !plan.done.includes(t.id));
+  $("coachTip").textContent = remaining.length ? "Your next action: " + remaining[0].title + ". Set a timer for " + remaining[0].mins + " minutes, silence distractions, and begin." : "All tasks are complete. Take a break and plan your next sprint.";
+});
+$("resetBtn").addEventListener("click", () => {
+  if(!plan) return;
+  plan.done = []; save(); render();
+});
+load();
+</script>
+</body>
+</html>
